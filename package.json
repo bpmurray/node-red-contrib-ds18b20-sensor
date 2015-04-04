@@ -1,0 +1,44 @@
+{
+  "author": {
+    "name": "Brendan Murray",
+    "email": "brendanpmurray@gmail.com",
+    "url": "http://coolfore.com/"
+  },
+  "name": "node-red-contrib-ds18b20-sensor",
+  "version": "0.0.10",
+  "description": "Node-red node to connect DS18B20 sensors",
+  "dependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpmurray/node-red-ds18b20-sensor.git"
+  },
+  "keywords": [
+    "node-red",
+    "sensor",
+    "temperature",
+    "DS18B20"
+  ],
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/bpmurray/node-red-ds18b20-sensor/issues"
+  },
+  "homepage": "https://github.com/bpmurray/node-red-ds18b20-sensor",
+  "node-red": {
+    "nodes": {
+      "ds18b20": "ds18b20-node/ds18b20-node.js"
+    }
+  },
+  "maintainers": [
+    {
+      "name": "bpmurray",
+      "email": "brendanpmurray@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "",
+    "tarball": ""
+  },
+  "directories": {},
+  "_resolved": ""
+}

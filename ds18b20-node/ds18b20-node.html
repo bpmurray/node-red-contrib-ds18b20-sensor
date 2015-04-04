@@ -1,0 +1,56 @@
+<!--
+  Copyright 2015 Brendan Murray
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<!-- Define the edit dialog.                       -->
+<script type="text/x-red" data-template-name="ds18b20">
+
+    <!-- Node name -->
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="ds18b20">
+   <p>Node to retrieve the temperature read by all DS18B20 sensors
+      at a predefined period determined by an input message. Alternatively,
+      if the input topic is not empty, it is assumed to be a device ID and its
+       temperature is returned.</p>
+   <p>Outputs a <b>msg</b> containing <b>msg.topic</b> and
+      <b>msg.payload</b>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('ds18b20', {
+        category: 'Raspberry Pi',      // the palette category
+        defaults: {             // defines the editable properties of the node
+            name:    {value: ""}
+        },
+        inputs:  1,              // set the number of inputs - only 0 or 1
+        outputs: 1,              // set the number of outputs - 0 to n
+        color:   "#C0DEED",
+        icon:    "ds18b20.png",   // saved in  icons/myicon.png
+        label:   function() {    // sets the default label contents
+                   return this.name||"rpi-ds18b20";
+                 },
+        labelStyle: function() { // sets the class to apply to the label
+                   return this.name ? "node_label_italic": "";
+                 }
+    });
+</script>
