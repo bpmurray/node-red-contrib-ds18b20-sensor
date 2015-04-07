@@ -18,6 +18,13 @@
 <!-- Define the edit dialog.                       -->
 <script type="text/x-red" data-template-name="rpi-ds18b20">
 
+    <!-- Topic - ID of target device -->
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <br/>
+
     <!-- Node name -->
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -30,16 +37,18 @@
 <script type="text/x-red" data-help-name="rpi-ds18b20">
    <p>Node to retrieve the temperature read by all DS18B20 sensors
       at a predefined period determined by an input message. Alternatively,
-      if the input topic is not empty, it is assumed to be a device ID and its
-       temperature is returned.</p>
-   <p>Outputs a <b>msg</b> containing <b>msg.topic</b> and
-      <b>msg.payload</b>.</p>
+      if the input topic is not empty, or the message arriving contains a 
+      non-empty topic, it is assumed to be a device ID and only the reading
+      for that device is retrieved.</p>
+      <p>Outputs a <b>msg</b> containing the device ID in the <b>msg.topic</b>
+      and the temperature in the <b>msg.payload</b>.</p>
 </script>
 
 <script type="text/javascript">
     RED.nodes.registerType('rpi-ds18b20', {
         category: 'Raspberry Pi',      // the palette category
         defaults: {             // defines the editable properties of the node
+            topic:   {value: ""},
             name:    {value: ""}
         },
         inputs:  1,              // set the number of inputs - only 0 or 1

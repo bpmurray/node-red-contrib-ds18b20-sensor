@@ -33,10 +33,13 @@ module.exports = function(RED) {
       // The root path of the sensors
       var W1PATH = "/sys/bus/w1/devices";
 
+      // Save the default device ID
+      this.topic = config.topic;
+
       var reading;
 
       // Get the list of devices 
-      this.devList = function() {
+      this.getDevList = function() {
 
          // Read the directory list
          var dirList = fs.readdirSync(W1PATH);
@@ -63,13 +66,15 @@ module.exports = function(RED) {
          // File read options
          var fsOptions = { "encoding":"utf8", "flag":"r" };
 
-         var sensors = (inMsg.topic == undefined)? devList()
-                                                 : [ inMsg.topic ];
+         var sensors = (this.topic == undefined) ? getDevList()
+                                                 : [ this.topic ];
 
          var msgList = [];
          for (var iX=0; iX<sensors.length; iX++) {
             var dev = sensors[iX];
             var msg = inMsg;
+
+            console.log("***DEVICE=" + dev);
 
             // Is it a DS18B20 directory?
             if (dev !== null) {
@@ -98,6 +103,9 @@ module.exports = function(RED) {
 
       // respond to inputs....
       this.on('input', function (msg) {
+         if (msg.topic !== undefined && msg.topic !== "") {
+            this.topic = msg.topic;
+         }
          var arr = this.read(msg);
          
          if (arr) {
