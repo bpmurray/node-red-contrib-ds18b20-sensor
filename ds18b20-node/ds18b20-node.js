@@ -16,6 +16,7 @@
 
 // Dependency - file system access
 var fs = require('fs');
+var _ = require('underscore');
 
 
 module.exports = function(RED) {
@@ -46,7 +47,7 @@ module.exports = function(RED) {
 
          // Get all the IDs - extra work, but that's OK
          for (var iX=0; iX<dirList.length; iX++) {
-            var dir = dirList[iX];
+            var dir = dirList[iX].toUpperCase();
             if (dir.indexOf("28-") == 0 && dir.length == 15) {
                // Format the name
                dirList[iX] = dir.substr(13,2)+dir.substr(11,2)+dir.substr(9,2)
@@ -66,22 +67,19 @@ module.exports = function(RED) {
          // File read options
          var fsOptions = { "encoding":"utf8", "flag":"r" };
 
-         var sensors = (this.topic == undefined) ? getDevList()
-                                                 : [ this.topic ];
+         var sensors = (this.topic == undefined || this.topic == "")
+                     ? this.getDevList() : [ this.topic ];
 
          var msgList = [];
          for (var iX=0; iX<sensors.length; iX++) {
             var dev = sensors[iX];
-            var msg = inMsg;
-
-            console.log("***DEVICE=" + dev);
 
             // Is it a DS18B20 directory?
-            if (dev !== null) {
-               var dir = dev.substr(13,2) + dev.substr(11,2) + dev.substr(9,2)
-                       + dev.substr(7,2) + dev.substr(5,2) + dev.substr(1,2);
-               var fData = fs.readFileSync(W1PATH + "/28-" + dir + "/w1_slave",
-                                           fsOptions).trim();
+            if (dev !== null && dev.length == 12) {
+               var dir = dev.substr(10,2) + dev.substr(9,2) + dev.substr(6,2)
+                       + dev.substr(4,2) + dev.substr(2,2) + dev.substr(0,2);
+               var fData = fs.readFileSync(W1PATH + "/28-" + dir.toLowerCase()
+                                           + "/w1_slave", fsOptions).trim();
                var tBeg = fData.indexOf("t=")+2;
                var tEnd = tBeg+1;
                while (tEnd<fData.length &&
@@ -92,7 +90,9 @@ module.exports = function(RED) {
                // Extract the temperature
                var temp = fData.substring(tBeg, tEnd);
 
-               msg.topic = dev;
+               // Set up the returned message
+               var msg     = _.clone(inMsg);
+               msg.topic   = dev;
                msg.payload = temp/1000.0;
                msgList.push(msg);
             }
