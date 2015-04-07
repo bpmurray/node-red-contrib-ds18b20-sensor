@@ -108,6 +108,6 @@ module.exports = function(RED) {
    }
 
    // Register the node by name.
-   RED.nodes.registerType("ds18b20", ds18b20Sensor);
+   RED.nodes.registerType("rpi-ds18b20", ds18b20Sensor);
 }
 

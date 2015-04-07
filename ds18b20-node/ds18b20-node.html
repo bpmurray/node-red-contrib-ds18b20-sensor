@@ -16,7 +16,7 @@
 
 
 <!-- Define the edit dialog.                       -->
-<script type="text/x-red" data-template-name="ds18b20">
+<script type="text/x-red" data-template-name="rpi-ds18b20">
 
     <!-- Node name -->
     <div class="form-row">
@@ -27,7 +27,7 @@
 
 
 <!-- Next, some simple help text is provided for the node.                   -->
-<script type="text/x-red" data-help-name="ds18b20">
+<script type="text/x-red" data-help-name="rpi-ds18b20">
    <p>Node to retrieve the temperature read by all DS18B20 sensors
       at a predefined period determined by an input message. Alternatively,
       if the input topic is not empty, it is assumed to be a device ID and its
@@ -37,7 +37,7 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('ds18b20-sensor', {
+    RED.nodes.registerType('rpi-ds18b20', {
         category: 'Raspberry Pi',      // the palette category
         defaults: {             // defines the editable properties of the node
             name:    {value: ""}

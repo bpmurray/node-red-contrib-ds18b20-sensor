@@ -26,7 +26,7 @@
   "homepage": "https://github.com/bpmurray/node-red-ds18b20-sensor",
   "node-red": {
     "nodes": {
-      "ds18b20": "ds18b20-node/ds18b20-node.js"
+      "rpi-ds18b20": "ds18b20-node/ds18b20-node.js"
     }
   },
   "maintainers": [
