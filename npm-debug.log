@@ -1,0 +1,121 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose publish [ '.' ]
+6 verbose cache add [ '.', null ]
+7 verbose cache add name=undefined spec="." args=[".",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '.',
+8 verbose parsed url   path: '.',
+8 verbose parsed url   href: '.' }
+9 silly lockFile 3a52ce78- .
+10 verbose lock . C:\Users\brendan\AppData\Roaming\npm-cache\3a52ce78-.lock
+11 verbose tar pack [ 'C:\\Temp\\npm-72924-XQR4H3lT\\1428436866240-0.6100994572043419\\tmp.tgz',
+11 verbose tar pack   '.' ]
+12 verbose tarball C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+13 verbose folder .
+14 info prepublish node-red-contrib-ds18b20-sensor@0.0.13
+15 silly lockFile 1f1177db-tar tar://.
+16 verbose lock tar://. C:\Users\brendan\AppData\Roaming\npm-cache\1f1177db-tar.lock
+17 silly lockFile ffbe5c43-66240-0-6100994572043419-tmp-tgz tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+18 verbose lock tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz C:\Users\brendan\AppData\Roaming\npm-cache\ffbe5c43-66240-0-6100994572043419-tmp-tgz.lock
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 1f1177db-tar tar://.
+21 silly lockFile ffbe5c43-66240-0-6100994572043419-tmp-tgz tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+22 silly lockFile ffbe5c43-66240-0-6100994572043419-tmp-tgz tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+23 verbose tar unpack C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+24 silly lockFile 6093ec1a-ib-ds18b20-sensor-0-0-13-package tar://C:\Users\brendan\AppData\Roaming\npm-cache\node-red-contrib-ds18b20-sensor\0.0.13\package
+25 verbose lock tar://C:\Users\brendan\AppData\Roaming\npm-cache\node-red-contrib-ds18b20-sensor\0.0.13\package C:\Users\brendan\AppData\Roaming\npm-cache\6093ec1a-ib-ds18b20-sensor-0-0-13-package.lock
+26 silly lockFile ffbe5c43-66240-0-6100994572043419-tmp-tgz tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+27 verbose lock tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz C:\Users\brendan\AppData\Roaming\npm-cache\ffbe5c43-66240-0-6100994572043419-tmp-tgz.lock
+28 silly gunzTarPerm modes [ '755', '644' ]
+29 silly gunzTarPerm extractEntry package.json
+30 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+31 silly gunzTarPerm extractEntry .npmignore
+32 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+33 silly gunzTarPerm extractEntry README.md
+34 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+35 silly gunzTarPerm extractEntry LICENSE
+36 silly gunzTarPerm modified mode [ 'LICENSE', 438, 420 ]
+37 silly gunzTarPerm extractEntry .gitattributes
+38 silly gunzTarPerm modified mode [ '.gitattributes', 438, 420 ]
+39 silly gunzTarPerm extractEntry ds18b20-node/ds18b20-node.js
+40 silly gunzTarPerm modified mode [ 'ds18b20-node/ds18b20-node.js', 438, 420 ]
+41 silly gunzTarPerm extractEntry ds18b20-node/ds18b20-node.html
+42 silly gunzTarPerm modified mode [ 'ds18b20-node/ds18b20-node.html', 438, 420 ]
+43 silly gunzTarPerm extractEntry ds18b20-node/icons/ds18b20.png
+44 silly gunzTarPerm modified mode [ 'ds18b20-node/icons/ds18b20.png', 438, 420 ]
+45 silly gunzTarPerm extractEntry icons/ds18b20.png
+46 silly gunzTarPerm modified mode [ 'icons/ds18b20.png', 438, 420 ]
+47 silly lockFile 6093ec1a-ib-ds18b20-sensor-0-0-13-package tar://C:\Users\brendan\AppData\Roaming\npm-cache\node-red-contrib-ds18b20-sensor\0.0.13\package
+48 silly lockFile 6093ec1a-ib-ds18b20-sensor-0-0-13-package tar://C:\Users\brendan\AppData\Roaming\npm-cache\node-red-contrib-ds18b20-sensor\0.0.13\package
+49 silly lockFile ffbe5c43-66240-0-6100994572043419-tmp-tgz tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+50 silly lockFile ffbe5c43-66240-0-6100994572043419-tmp-tgz tar://C:\Temp\npm-72924-XQR4H3lT\1428436866240-0.6100994572043419\tmp.tgz
+51 silly lockFile 3a52ce78- .
+52 silly lockFile 3a52ce78- .
+53 silly publish { author:
+53 silly publish    { name: 'Brendan Murray',
+53 silly publish      email: 'brendanpmurray@gmail.com',
+53 silly publish      url: 'http://coolfore.com/' },
+53 silly publish   name: 'node-red-contrib-ds18b20-sensor',
+53 silly publish   version: '0.0.13',
+53 silly publish   description: 'Node-red node to connect DS18B20 sensors',
+53 silly publish   dependencies: { underscore: '*' },
+53 silly publish   repository:
+53 silly publish    { type: 'git',
+53 silly publish      url: 'https://github.com/bpmurray/node-red-ds18b20-sensor.git' },
+53 silly publish   keywords: [ 'node-red', 'sensor', 'temperature', 'DS18B20' ],
+53 silly publish   license: 'Apache 2.0',
+53 silly publish   bugs: { url: 'https://github.com/bpmurray/node-red-ds18b20-sensor/issues' },
+53 silly publish   homepage: 'https://github.com/bpmurray/node-red-ds18b20-sensor',
+53 silly publish   'node-red': { nodes: { 'rpi-ds18b20': 'ds18b20-node/ds18b20-node.js' } },
+53 silly publish   maintainers: [ { name: 'bpmurray', email: 'brendanpmurray@gmail.com' } ],
+53 silly publish   dist: { shasum: '', tarball: '' },
+53 silly publish   directories: {},
+53 silly publish   _resolved: '',
+53 silly publish   readme: '# node-red-contrib-ds18b20-sensor\r\nThis is a [Node Red](http://nodered.org/) node to manage connection to DS18B20 sensors on a Raspberry Pi. For each sensor found, it returns a msg object where the topic is set to the sensor ID and the payload is set to the temperature. If a device ID is passed into the node as the topic, this is used to return a single reading for the specified sensor.\r\n\r\nNote that this does not use the owserver/owsfs services since I have found that these are unreliable.\r\n\r\nThe node is added to the Raspberry Pi section.\r\n',
+53 silly publish   readmeFilename: 'README.md',
+53 silly publish   _id: 'node-red-contrib-ds18b20-sensor@0.0.13',
+53 silly publish   _shasum: 'def74e6e10f630b693d1d0eda86ccc1646cc3435',
+53 silly publish   _from: '.' }
+54 verbose url raw node-red-contrib-ds18b20-sensor
+55 verbose url resolving [ 'https://registry.npmjs.org/',
+55 verbose url resolving   './node-red-contrib-ds18b20-sensor' ]
+56 verbose url resolved https://registry.npmjs.org/node-red-contrib-ds18b20-sensor
+57 info trying registry request attempt 1 at 21:01:06
+58 http PUT https://registry.npmjs.org/node-red-contrib-ds18b20-sensor
+59 http 409 https://registry.npmjs.org/node-red-contrib-ds18b20-sensor
+60 verbose url raw node-red-contrib-ds18b20-sensor?write=true
+61 verbose url resolving [ 'https://registry.npmjs.org/',
+61 verbose url resolving   './node-red-contrib-ds18b20-sensor?write=true' ]
+62 verbose url resolved https://registry.npmjs.org/node-red-contrib-ds18b20-sensor?write=true
+63 info trying registry request attempt 1 at 21:01:08
+64 http GET https://registry.npmjs.org/node-red-contrib-ds18b20-sensor?write=true
+65 http 200 https://registry.npmjs.org/node-red-contrib-ds18b20-sensor?write=true
+66 error publish fail Cannot publish over existing version.
+66 error publish fail Update the 'version' field in package.json and try again.
+66 error publish fail
+66 error publish fail If the previous version was published in error, see:
+66 error publish fail     npm help unpublish
+66 error publish fail
+66 error publish fail To automatically increment version numbers, see:
+66 error publish fail     npm help version
+67 error System Windows_NT 6.1.7601
+68 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+69 error cwd C:\Development\Bees\node-red-contrib-ds18b20-sensor
+70 error node -v v0.10.28
+71 error npm -v 1.4.9
+72 error code EPUBLISHCONFLICT
+73 verbose exit [ 1, true ]
