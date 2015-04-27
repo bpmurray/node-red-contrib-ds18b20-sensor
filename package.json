@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bpmurray/node-red-ds18b20-sensor.git"
+    "url": "https://github.com/bpmurray/node-red-contrib-ds18b20-sensor.git"
   },
   "keywords": [
     "node-red",
