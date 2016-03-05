@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Brendan Murray
+ * Copyright 2015, 2016 Brendan Murray
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+
+// See https://www.maximintegrated.com/en/app-notes/index.mvp/id/187 for
+// a description of the 1-wire protocol.
 
 // Dependency - file system access
 var fs = require('fs');
