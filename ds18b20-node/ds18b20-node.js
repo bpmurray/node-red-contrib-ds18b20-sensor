@@ -33,9 +33,12 @@ module.exports = function(RED) {
 
       // The root path of the sensors
       var W1PATH = "/sys/bus/w1/devices";
+      
       // The devices list file
       var W1DEVICES = "/sys/devices/w1_bus_master1/w1_master_slaves";
+      
       // Device family: "28"= DS18B20, "10" = DS18S20
+      // See http://owfs.org/index.php?page=family-code-list
       var family = "28";
       
       // Save the default device ID
