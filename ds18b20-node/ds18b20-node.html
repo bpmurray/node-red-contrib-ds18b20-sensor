@@ -40,6 +40,11 @@
       if the input topic is not empty, or the message arriving contains a 
       non-empty topic, it is assumed to be a device ID and only the reading
       for that device is retrieved.</p>
+
+      <p>Set the <b>msg.family</b> to enable support for other probes, e.g. 
+      set it to "10" for a DS18S20 sensor. See 
+      <a href="http://owfs.org/index.php?page=family-code-list"
+      target="_blank">this</a> for information on device families.</p>
       <p>Outputs a <b>msg</b> containing the device ID in the <b>msg.topic</b>
       and the temperature in the <b>msg.payload</b>.</p>
 </script>
