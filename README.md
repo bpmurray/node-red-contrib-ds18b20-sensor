@@ -3,19 +3,19 @@ This is a [Node Red](http://nodered.org/) node to manage connection to DS18B20 s
 
 A simple flow is to click on an *input node* to inject an empty message to the *sensor node* and capture the output in a *debug node*:
 
-![Image of Node-RED flow](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/flow1.jpg)
+![Node-RED flow](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/flow1.jpg?raw=true)
 
 Clicking on the *input node* causes the values from all available temperature sensors to be returned as a series of messages:
 
-![Image of message list](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data1.jpg)
+![Message list](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data1.jpg?raw=true)
 
 If the *Array* checkbox is checked this will cause ther return of data as an array:
 
-![Image of Edit dialog](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/dialog1.jpg)
+![Edit dialog](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/dialog1.jpg?raw=true)
 
 Now, if the *input node* is clicked again, this time the data are returned as an array:
 
-![Image of message array](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data2.jpg)
+![Message array](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data2.jpg?raw=true)
 
 
 By default, this node targets DS18B20 sensors, but you can also use it to capture data from other similar sensors. This reads the list of all available sensors using the Dallas One-Wire Protocol, and retrieves the temperature from those sensors that provide a temperature value.
