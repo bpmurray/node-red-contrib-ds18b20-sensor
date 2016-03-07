@@ -40,70 +40,96 @@ module.exports = function(RED) {
       // The devices list file
       var W1DEVICES = "/sys/devices/w1_bus_master1/w1_master_slaves";
       
-      // Device family: "28"= DS18B20, "10" = DS18S20
-      // See http://owfs.org/index.php?page=family-code-list
-      var family = "28";
-      
       // Save the default device ID
       this.topic = config.topic;
 
-      var reading;
+      // If we are to return an array
+      this.returnArray = false;
 
-      // Get the list of devices 
-      this.getDevList = function() {
-
-         // Read the directory list
-         var dirList = fs.readdirSync(W1PATH);
-
-         // Get all the IDs - extra work, but that's OK
-         for (var iX=0; iX<dirList.length; iX++) {
-            var dir = dirList[iX].toUpperCase();
-            if (dir.indexOf(family+"-") == 0 && dir.length == 15) {
-               // Format the name
-               dirList[iX] = dir.substr(13,2)+dir.substr(11,2)+dir.substr(9,2)
-                           + dir.substr(7,2)+dir.substr(5,2)+dir.substr(3,2);
-            } else {
-               // Not the correct format name - drop it!
-               dirList[iX] = null;
+      // Load information from the devices list
+      this.loadDeviceData = function() {
+         var deviceList = [];
+         var fsOptions = { "encoding":"utf8", "flag":"r" };
+         var devs = fs.readFileSync(W1DEVICES, fsOptions).split("\n");
+         for (var iX=0; iX<devs.length; iX++) {
+            if (devs[iX] !== undefined && devs[iX] !== "") {
+               var fData = fs.readFileSync(W1PATH + "/" + devs[iX] +
+                                           "/w1_slave", fsOptions).trim();
+               // Extract the numeric part
+               var tBeg = fData.indexOf("t=")+2;
+               if (tBeg >= 0) {
+                  var tEnd = tBeg+1;
+                  while (tEnd<fData.length &&
+                         fData[tEnd]>='0' && fData[tEnd]<='9') {
+                     tEnd++;
+                  }
+                  var temp = fData.substring(tBeg, tEnd);
+   
+                  deviceList.push({
+                      "family": devs[iX].substr(0,2),
+                      "id":     devs[iX].substr(13,2) + devs[iX].substr(11,2) +
+                                devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
+                                devs[iX].substr(5,2)  + devs[iX].substr(3,2),
+                      "file":   devs[iX],
+                      "temp":   temp/1000.0
+                  });
+               }
             }
          }
-         return dirList;
+         return deviceList;
+      }
+
+      // Return the deviceList entry, given a device ID
+      this.findDevice = function(deviceList, devId) {
+         for (var iX=0; iX<deviceList.length; iX++) {
+            if (devId === deviceList[iX].file.substr(3) ||
+                devId === deviceList[iX].id) {
+               return deviceList[iX];
+            }
+         }
+         return null;
       }
 
 
       // Read the data & return a message object
       this.read = function(inMsg) {
-
-         // File read options
-         var fsOptions = { "encoding":"utf8", "flag":"r" };
-
-         var sensors = (this.topic == undefined || this.topic == "")
-                     ? this.getDevList() : [ this.topic ];
+         // Retrieve the full set of data
+         var deviceList = this.loadDeviceData();
 
          var msgList = [];
-         for (var iX=0; iX<sensors.length; iX++) {
-            var dev = sensors[iX];
 
-            // Is it a DS18B20 directory?
-            if (dev !== null && dev.length == 12) {
-               var dir = dev.substr(10,2) + dev.substr(9,2) + dev.substr(6,2)
-                       + dev.substr(4,2) + dev.substr(2,2) + dev.substr(0,2);
-               var fData = fs.readFileSync(W1PATH + "/" + family+ "-" + dir.toLowerCase()
-                                           + "/w1_slave", fsOptions).trim();
-               var tBeg = fData.indexOf("t=")+2;
-               var tEnd = tBeg+1;
-               while (tEnd<fData.length &&
-                      fData[tEnd]>='0' && fData[tEnd]<='9') {
-                  tEnd++;
+         if (this.topic != undefined && this.topic != "") {
+            // Set up the returned message
+            var dev   = this.findDevice(deviceList, this.topic);
+            var msg   = _.clone(inMsg);
+
+            if (this.returnArray) {
+               msg.topic   = "";
+               msg.payload = [];
+               msg.payload[0] = dev;
+            } else {
+               msg.topic = dev.id;
+               if (dev === null) {  // Device not found!
+                 msg.family  = 0;
+                 msg.payload = "";
+               } else {
+                 msg.family  = dev.family;
+                 msg.payload = dev.temp;
                }
-   
-               // Extract the temperature
-               var temp = fData.substring(tBeg, tEnd);
-
+            }
+            msgList.push(msg);
+         } else if (this.returnArray) {
+              var msg     = _.clone(inMsg);
+              msg.topic   = "";
+              msg.payload = deviceList;
+              msgList.push(msg);
+         } else {
+            for (var iX=0; iX<deviceList.length; iX++) {
                // Set up the returned message
                var msg     = _.clone(inMsg);
-               msg.topic   = dev;
-               msg.payload = temp/1000.0;
+               msg.topic   = deviceList[iX].id;
+               msg.family  = deviceList[iX].family;
+               msg.payload = deviceList[iX].temp;
                msgList.push(msg);
             }
          }
@@ -113,12 +139,12 @@ module.exports = function(RED) {
 
       // respond to inputs....
       this.on('input', function (msg) {
+         this.topic = config.topic;
          if (msg.topic !== undefined && msg.topic !== "") {
             this.topic = msg.topic;
          }
-         if (msg.family !== undefined && msg.family !== "") {
-            this.family = msg.family;
-         }
+         this.returnArray = msg.array | config.array;
+
          var arr = this.read(msg);
          
          if (arr) {
