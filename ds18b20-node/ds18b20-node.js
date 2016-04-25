@@ -63,13 +63,14 @@ module.exports = function(RED) {
                          fData[tEnd]>='0' && fData[tEnd]<='9') {
                      tEnd++;
                   }
-                  var temp = fData.substring(tBeg, tEnd);
+                  var temp   = fData.substring(tBeg, tEnd);
+                  var tmpDev = devs[iX].substr(13,2) + devs[iX].substr(11,2) +
+                               devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
+                               devs[iX].substr(5,2)  + devs[iX].substr(3,2);
    
                   deviceList.push({
                       "family": devs[iX].substr(0,2),
-                      "id":     devs[iX].substr(13,2) + devs[iX].substr(11,2) +
-                                devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
-                                devs[iX].substr(5,2)  + devs[iX].substr(3,2),
+                      "id":     tmpDev.toUpperCase(),
                       "file":   devs[iX],
                       "temp":   temp/1000.0
                   });
@@ -81,12 +82,24 @@ module.exports = function(RED) {
 
       // Return the deviceList entry, given a device ID
       this.findDevice = function(deviceList, devId) {
+         devId = devId.toUpperCase();
          for (var iX=0; iX<deviceList.length; iX++) {
             if (devId === deviceList[iX].file.substr(3) ||
                 devId === deviceList[iX].id) {
                return deviceList[iX];
             }
          }
+         // If it's not in the normalised form
+         var tmpDev = devId.substr(13,2) + devId.substr(11,2) +
+                      devId.substr(9,2)  + devId.substr(7,2)  +
+                      devId.substr(5,2)  + devId.substr(3,2);
+         for (var iX=0; iX<deviceList.length; iX++) {
+            if (devId === deviceList[iX].file.substr(3) ||
+                devId === deviceList[iX].id) {
+               return deviceList[iX];
+            }
+         }
+         
          return null;
       }
 
