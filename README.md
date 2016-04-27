@@ -9,7 +9,7 @@ Clicking on the *input node* causes the values from all available temperature se
 
 ![Message list](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data1.jpg?raw=true)
 
-If the *Array* checkbox is checked this will cause ther return of data as an array:
+If the *Array* checkbox is checked this will cause the return of data as an array, and any execution of the node that returns multiple devices will also return the data as an array, i.e. the fucntion of this checkbox is to force a single value into an array:
 
 ![Edit dialog](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/dialog1.jpg?raw=true)
 

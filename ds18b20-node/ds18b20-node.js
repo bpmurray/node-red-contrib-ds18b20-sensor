@@ -110,41 +110,41 @@ module.exports = function(RED) {
          var deviceList = this.loadDeviceData();
 
          var msgList = [];
+         var msg;
 
          if (this.topic != undefined && this.topic != "") {
-            // Set up the returned message
-            var dev   = this.findDevice(deviceList, this.topic);
-            var msg   = _.clone(inMsg);
-
-            if (this.returnArray) {
-               msg.topic   = "";
-               msg.payload = [];
-               msg.payload[0] = dev;
-            } else {
-               msg.topic = dev.id;
-               if (dev === null) {  // Device not found!
-                 msg.family  = 0;
-                 msg.payload = "";
+            // Split a list into devices (or 1 if only 1)
+            var sList = this.topic.split(" ");
+            var retArr = [];
+            for (var iX=0; iX<sList.length; iX++) {
+               // Set up the returned message
+               var dev = this.findDevice(deviceList, sList[iX]);
+               if (this.returnArray || sList.length > 1) {
+                  retArr.push(dev);
                } else {
-                 msg.family  = dev.family;
-                 msg.payload = dev.temp;
+                  msg = _.clone(inMsg);
+                  if (dev === null) {  // Device not found!
+                    msg.family  = 0;
+                    msg.payload = "";
+                  } else {
+                    msg.topic = dev.id;
+                    msg.family  = dev.family;
+                    msg.payload = dev.temp;
+                  }
+                  msgList.push(msg);
                }
             }
-            msgList.push(msg);
-         } else if (this.returnArray) {
-              var msg     = _.clone(inMsg);
+            if (this.returnArray || sList.length > 1) {
+              msg = _.clone(inMsg);
+              msg.topic   = "";
+              msg.payload = retArr;
+              msgList.push(msg);
+            }
+         } else {
+              msg     = _.clone(inMsg);
               msg.topic   = "";
               msg.payload = deviceList;
               msgList.push(msg);
-         } else {
-            for (var iX=0; iX<deviceList.length; iX++) {
-               // Set up the returned message
-               var msg     = _.clone(inMsg);
-               msg.topic   = deviceList[iX].id;
-               msg.family  = deviceList[iX].family;
-               msg.payload = deviceList[iX].temp;
-               msgList.push(msg);
-            }
          }
          return msgList;
 
