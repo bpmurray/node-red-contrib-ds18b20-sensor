@@ -111,7 +111,6 @@ module.exports = function(RED) {
 
          var msgList = [];
          var msg;
-inMsg.Version="20160505a";
 
          if (this.topic != undefined && this.topic != "") {
             // Split a list into devices (or 1 if only 1)
@@ -123,30 +122,16 @@ inMsg.Version="20160505a";
                // If we're returning an array, stre the device
                if (this.returnArray) { // || sList.length > 1) {
                   retArr.push(dev);
-               } else if (sList.length > 1) {
-                  // Not an array, but multiple reads
-                  msg = _.clone(inMsg);
-                  if (dev === null) {  // Device not found!
-                    msg.family  = 0;
-                    msg.payload = dev.temp;
-                  } else {
-                    msg.topic   = dev.id;
-                    msg.family  = dev.family;
-                    msg.payload = dev.temp;
-                  }
-                  msgList.push(msg);
                } else {
                   // Not an array - build a message
                   msg = _.clone(inMsg);
-                  if (dev === null) {  // Device not found!
-                    msg.family  = 0;
-                    msg.payload = "";
-                  } else {
-                    msg.topic   = dev.id;
-                    msg.family  = dev.family;
-                    msg.payload = dev.temp;
+                  if (dev !== null) {  // Device not found!
+                     msg.topic = dev.id;
+                     msg.family  = dev.family;
+                     msg.payload = dev.temp;
+                     msg.file    = dev.file;
+                     msgList.push(msg);
                   }
-                  msgList.push(msg);
                }
             }
             if (this.returnArray ) {
@@ -168,6 +153,7 @@ inMsg.Version="20160505a";
                   msg.topic   = deviceList[iX].id;
                   msg.family  = deviceList[iX].family;
                   msg.payload = deviceList[iX].temp;
+                  msg.file    = deviceList[iX].file;
                   msgList.push(msg);
                }
             }
