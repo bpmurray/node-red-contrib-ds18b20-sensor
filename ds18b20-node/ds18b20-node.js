@@ -111,6 +111,7 @@ module.exports = function(RED) {
 
          var msgList = [];
          var msg;
+inMsg.Version="20160505a";
 
          if (this.topic != undefined && this.topic != "") {
             // Split a list into devices (or 1 if only 1)
@@ -119,32 +120,57 @@ module.exports = function(RED) {
             for (var iX=0; iX<sList.length; iX++) {
                // Set up the returned message
                var dev = this.findDevice(deviceList, sList[iX]);
-               if (this.returnArray || sList.length > 1) {
+               // If we're returning an array, stre the device
+               if (this.returnArray) { // || sList.length > 1) {
                   retArr.push(dev);
+               } else if (sList.length > 1) {
+                  // Not an array, but multiple reads
+                  msg = _.clone(inMsg);
+                  if (dev === null) {  // Device not found!
+                    msg.family  = 0;
+                    msg.payload = dev.temp;
+                  } else {
+                    msg.topic   = dev.id;
+                    msg.family  = dev.family;
+                    msg.payload = dev.temp;
+                  }
+                  msgList.push(msg);
                } else {
+                  // Not an array - build a message
                   msg = _.clone(inMsg);
                   if (dev === null) {  // Device not found!
                     msg.family  = 0;
                     msg.payload = "";
                   } else {
-                    msg.topic = dev.id;
+                    msg.topic   = dev.id;
                     msg.family  = dev.family;
                     msg.payload = dev.temp;
                   }
                   msgList.push(msg);
                }
             }
-            if (this.returnArray || sList.length > 1) {
+            if (this.returnArray ) {
               msg = _.clone(inMsg);
               msg.topic   = "";
               msg.payload = retArr;
               msgList.push(msg);
             }
          } else {
+            if (this.returnArray ) {
               msg     = _.clone(inMsg);
               msg.topic   = "";
               msg.payload = deviceList;
               msgList.push(msg);
+            } else {
+               // Not an array - build a message
+               for (var iX=0; iX<deviceList.length; iX++) {
+                  msg = _.clone(inMsg);
+                  msg.topic   = deviceList[iX].id;
+                  msg.family  = deviceList[iX].family;
+                  msg.payload = deviceList[iX].temp;
+                  msgList.push(msg);
+               }
+            }
          }
          return msgList;
 
