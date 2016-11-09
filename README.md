@@ -3,7 +3,7 @@ This is a [Node Red](http://nodered.org/) node to manage connection to DS18B20 s
 
 A simple flow is to click on an *input node* to inject an empty message to the *sensor node* and capture the output in a *debug node*:
 
-![Node-RED flow](https://www.dropbox.com/s/1gcas4hjmbeg8om/flow1.jpg?raw=1)
+![Node-RED flow](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/flow1.jpg?raw=true)
 
 Clicking on the *input node* causes the values from all available temperature sensors to be returned as a series of messages:
 
