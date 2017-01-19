@@ -84,7 +84,7 @@ module.exports = function(RED) {
       this.findDevice = function(deviceList, devId) {
          devId = devId.toUpperCase();
          for (var iX=0; iX<deviceList.length; iX++) {
-            if (devId === deviceList[iX].file.substr(3) ||
+            if (devId === deviceList[iX].file.substr(3).toUpperCase() ||
                 devId === deviceList[iX].id) {
                return deviceList[iX];
             }
@@ -94,7 +94,7 @@ module.exports = function(RED) {
                       devId.substr(9,2)  + devId.substr(7,2)  +
                       devId.substr(5,2)  + devId.substr(3,2);
          for (var iX=0; iX<deviceList.length; iX++) {
-            if (devId === deviceList[iX].file.substr(3) ||
+            if (devId === deviceList[iX].file.substr(3).toUpperCase() ||
                 devId === deviceList[iX].id) {
                return deviceList[iX];
             }
