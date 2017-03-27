@@ -37,6 +37,9 @@ module.exports = function(RED) {
       // The root path of the sensors
       var W1PATH = "/sys/bus/w1/devices";
       
+      // The directories location
+      var W1DIRS = "/sys/devices/";
+
       // The devices list file
       var W1DEVICES = "/sys/devices/w1_bus_master1/w1_master_slaves";
       
@@ -50,30 +53,36 @@ module.exports = function(RED) {
       this.loadDeviceData = function() {
          var deviceList = [];
          var fsOptions = { "encoding":"utf8", "flag":"r" };
-         var devs = fs.readFileSync(W1DEVICES, fsOptions).split("\n");
-         for (var iX=0; iX<devs.length; iX++) {
-            if (devs[iX] !== undefined && devs[iX] !== "") {
-               var fData = fs.readFileSync(W1PATH + "/" + devs[iX] +
+         var dirs = fs.readdirSync(W1DIRS, "utf8");
+         for (var iY=0; iY<dirs.length; iY++) {
+            if (dirs[iY].startsWith("w1_bus_master")) {
+               var devs = fs.readFileSync(W1DIRS + dirs[iY] + 
+                             "/w1_master_slaves", fsOptions).split("\n");
+               for (var iX=0; iX<devs.length; iX++) {
+                  if (devs[iX] !== undefined && devs[iX] !== "") {
+                     var fData = fs.readFileSync(W1PATH + "/" + devs[iX] +
                                            "/w1_slave", fsOptions).trim();
-               // Extract the numeric part
-               var tBeg = fData.indexOf("t=")+2;
-               if (tBeg >= 0) {
-                  var tEnd = tBeg+1;
-                  while (tEnd<fData.length &&
-                         fData[tEnd]>='0' && fData[tEnd]<='9') {
-                     tEnd++;
-                  }
-                  var temp   = fData.substring(tBeg, tEnd);
-                  var tmpDev = devs[iX].substr(13,2) + devs[iX].substr(11,2) +
-                               devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
-                               devs[iX].substr(5,2)  + devs[iX].substr(3,2);
+                     // Extract the numeric part
+                     var tBeg = fData.indexOf("t=")+2;
+                     if (tBeg >= 0) {
+                        var tEnd = tBeg+1;
+                        while (tEnd<fData.length &&
+                               fData[tEnd]>='0' && fData[tEnd]<='9') {
+                           tEnd++;
+                        }
+                        var temp   = fData.substring(tBeg, tEnd);
+                        var tmpDev = devs[iX].substr(13,2) + devs[iX].substr(11,2) +
+                                     devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
+                                     devs[iX].substr(5,2)  + devs[iX].substr(3,2);
    
-                  deviceList.push({
-                      "family": devs[iX].substr(0,2),
-                      "id":     tmpDev.toUpperCase(),
-                      "file":   devs[iX],
-                      "temp":   temp/1000.0
-                  });
+                        deviceList.push({
+                            "family": devs[iX].substr(0,2),
+                            "id":     tmpDev.toUpperCase(),
+                            "file":   devs[iX],
+                            "temp":   temp/1000.0
+                        });
+                     }
+                  }
                }
             }
          }
@@ -119,44 +128,32 @@ module.exports = function(RED) {
             for (var iX=0; iX<sList.length; iX++) {
                // Set up the returned message
                var dev = this.findDevice(deviceList, sList[iX]);
-               // If we're returning an array, stre the device
-               if (this.returnArray) { // || sList.length > 1) {
+               if (this.returnArray || sList.length > 1) {
                   retArr.push(dev);
                } else {
-                  // Not an array - build a message
                   msg = _.clone(inMsg);
-                  if (dev !== null) {  // Device not found!
-                     msg.topic = dev.id;
-                     msg.family  = dev.family;
-                     msg.payload = dev.temp;
-                     msg.file    = dev.file;
-                     msgList.push(msg);
+                  if (dev === null) {  // Device not found!
+                    msg.family  = 0;
+                    msg.payload = "";
+                  } else {
+                    msg.topic = dev.id;
+                    msg.family  = dev.family;
+                    msg.payload = dev.temp;
                   }
+                  msgList.push(msg);
                }
             }
-            if (this.returnArray ) {
+            if (this.returnArray || sList.length > 1) {
               msg = _.clone(inMsg);
               msg.topic   = "";
               msg.payload = retArr;
               msgList.push(msg);
             }
          } else {
-            if (this.returnArray ) {
               msg     = _.clone(inMsg);
               msg.topic   = "";
               msg.payload = deviceList;
               msgList.push(msg);
-            } else {
-               // Not an array - build a message
-               for (var iX=0; iX<deviceList.length; iX++) {
-                  msg = _.clone(inMsg);
-                  msg.topic   = deviceList[iX].id;
-                  msg.family  = deviceList[iX].family;
-                  msg.payload = deviceList[iX].temp;
-                  msg.file    = deviceList[iX].file;
-                  msgList.push(msg);
-               }
-            }
          }
          return msgList;
 
