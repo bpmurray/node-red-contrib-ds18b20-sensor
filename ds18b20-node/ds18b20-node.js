@@ -149,14 +149,23 @@ module.exports = function(RED) {
               msg.payload = retArr;
               msgList.push(msg);
             }
-         } else {
-              msg     = _.clone(inMsg);
-              msg.topic   = "";
-              msg.payload = deviceList;
-              msgList.push(msg);
+         } else { // No list of devices in the topic
+            if (this.returnArray) { // Return as an array?
+               msg     = _.clone(inMsg);
+               msg.topic   = "";
+               msg.payload = deviceList;
+               msgList.push(msg);
+            } else { // Not an array - a series of messages
+               for (var iX=0; iX<deviceList.length; iX++) {
+                  msg = _.clone(inMsg);
+                  msg.topic   = deviceList[iX].id;
+                  msg.family  = deviceList[iX].family;
+                  msg.payload = deviceList[iX].temp;
+                  msgList.push(msg);
+               }
+            }
          }
          return msgList;
-
       };
 
       // respond to inputs....
