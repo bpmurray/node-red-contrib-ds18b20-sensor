@@ -27,7 +27,7 @@ In both cases, the timestamp of the reading is set in the message.
 
 Now, if the *input node* is clicked again, this time the data are returned as an array:
 
-![Message array](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data2.jpg?raw=true)
+![Message array](https://github.com/bpmurray/node-red-contrib-ds18b20-sensor/blob/master/data2.png?raw=true)
 
 
 By default, this node targets DS18B20 sensors, but you can also use it to capture data from other similar sensors. This reads the list of all available sensors using the Dallas One-Wire Protocol, and retrieves the temperature from those sensors that provide a temperature value.
