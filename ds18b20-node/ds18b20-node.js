@@ -78,6 +78,7 @@ module.exports = function(RED) {
                         deviceList.push({
                             "family": devs[iX].substr(0,2),
                             "id":     tmpDev.toUpperCase(),
+                            "dir":    dirs[iY],
                             "file":   devs[iX],
                             "temp":   temp/1000.0
                         });
@@ -136,7 +137,9 @@ module.exports = function(RED) {
                     msg.family  = 0;
                     msg.payload = "";
                   } else {
-                    msg.topic = dev.id;
+                    msg.file    = dev.file;
+                    msg.dir     = dev.dir;
+                    msg.topic   = dev.id;
                     msg.family  = dev.family;
                     msg.payload = dev.temp;
                   }
@@ -158,6 +161,8 @@ module.exports = function(RED) {
             } else { // Not an array - a series of messages
                for (var iX=0; iX<deviceList.length; iX++) {
                   msg = _.clone(inMsg);
+                  msg.file    = deviceList[iX].file;
+                  msg.dir     = deviceList[iX].dir;
                   msg.topic   = deviceList[iX].id;
                   msg.family  = deviceList[iX].family;
                   msg.payload = deviceList[iX].temp;
