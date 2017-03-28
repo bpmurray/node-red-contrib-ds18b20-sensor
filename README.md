@@ -1,5 +1,5 @@
 # node-red-contrib-ds18b20-sensor
-This is a [Node Red](http://nodered.org/) node to manage connection to DS18B20 sensors on a Raspberry Pi. For each sensor found, it returns the msg object where the *topic* is set to the sensor ID and the *payload* is set to the temperature. If the node's topic is set to a device ID, or a device ID is passed into the node as **msg.topic**, this is used to return a single reading for the specified sensor. If the *Array* checkbox is checked or **msg.array** is set to true, the value(s) are returned as an array in **msg.payload**. The current timestamp is always set as **msg.timestamp**.
+This is a [Node Red](http://nodered.org/) node to manage connection to DS18B20 sensors on a Raspberry Pi, searching all available directories. For each sensor found, it returns the msg object where the *topic* is set to the sensor ID and the *payload* is set to the temperature. If the node's topic is set to a device ID, or a device ID is passed into the node as **msg.topic**, this is used to return a single reading for the specified sensor. If the *Array* checkbox is checked or **msg.array** is set to true, the value(s) are returned as an array in **msg.payload**. The current timestamp is always set as **msg.timestamp**.
 
 A simple flow is to click on an *input node* to inject an empty message to the *sensor node* and capture the output in a *debug node*:
 
@@ -20,7 +20,7 @@ If you provide an empty topic value, this indicates that you want the data assoc
 
 However, if the checkbox is not checked, the values are returned as a series of individual messages, one per sensor, where the payload is set to the temperature value. In this case, the topic contains the ID of the sensor:
 ```javascript
-{ "topic": "8D85FB050000", "payload": 16.687, "_msgid": "dd456bcd.22ba98", "timestamp": 1462462207366, "family": "28", "file": "28-000005fb858d" }
+{ "_msgid":"dd456bcd.22ba98", "topic":"71EEFA050000", "payload":30.875, "timestamp":1490739050565, "file":"28-000005faee71", "dir":"w1_bus_master1", "family":"28" }
 ```
 
 In both cases, the timestamp of the reading is set in the message.
