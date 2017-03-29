@@ -5,7 +5,7 @@
     "url": "http://coolfore.com/"
   },
   "name": "node-red-contrib-ds18b20-sensor",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Node-red node to connect DS18B20 sensors",
   "dependencies": {
     "underscore": "*"

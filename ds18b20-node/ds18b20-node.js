@@ -61,28 +61,30 @@ module.exports = function(RED) {
                for (var iX=0; iX<devs.length; iX++) {
                   if (devs[iX] !== undefined && devs[iX] !== ""
                                              && devs[iX] !== "not found.") {
-                     var fData = fs.readFileSync(W1PATH + "/" + devs[iX] +
-                                           "/w1_slave", fsOptions).trim();
-                     // Extract the numeric part
-                     var tBeg = fData.indexOf("t=")+2;
-                     if (tBeg >= 0) {
-                        var tEnd = tBeg+1;
-                        while (tEnd<fData.length &&
-                               fData[tEnd]>='0' && fData[tEnd]<='9') {
-                           tEnd++;
-                        }
-                        var temp   = fData.substring(tBeg, tEnd);
-                        var tmpDev = devs[iX].substr(13,2) + devs[iX].substr(11,2) +
-                                     devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
-                                     devs[iX].substr(5,2)  + devs[iX].substr(3,2);
+                     var fName = W1PATH + "/" + devs[iX] + "/w1_slave";
+                     if (fs.existsSync(fName)) {
+                        var fData = fs.readFileSync(fName, fsOptions).trim();
+                        // Extract the numeric part
+                        var tBeg = fData.indexOf("t=")+2;
+                        if (tBeg >= 0) {
+                           var tEnd = tBeg+1;
+                           while (tEnd<fData.length &&
+                                  fData[tEnd]>='0' && fData[tEnd]<='9') {
+                              tEnd++;
+                           }
+                           var temp   = fData.substring(tBeg, tEnd);
+                           var tmpDev = devs[iX].substr(13,2) + devs[iX].substr(11,2) +
+                                        devs[iX].substr(9,2)  + devs[iX].substr(7,2)  +
+                                        devs[iX].substr(5,2)  + devs[iX].substr(3,2);
    
-                        deviceList.push({
-                            "family": devs[iX].substr(0,2),
-                            "id":     tmpDev.toUpperCase(),
-                            "dir":    dirs[iY],
-                            "file":   devs[iX],
-                            "temp":   temp/1000.0
-                        });
+                           deviceList.push({
+                               "family": devs[iX].substr(0,2),
+                               "id":     tmpDev.toUpperCase(),
+                               "dir":    dirs[iY],
+                               "file":   devs[iX],
+                               "temp":   temp/1000.0
+                           });
+                        }
                      }
                   }
                }
