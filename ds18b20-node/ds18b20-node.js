@@ -59,7 +59,8 @@ module.exports = function(RED) {
                var devs = fs.readFileSync(W1DIRS + dirs[iY] + 
                              "/w1_master_slaves", fsOptions).split("\n");
                for (var iX=0; iX<devs.length; iX++) {
-                  if (devs[iX] !== undefined && devs[iX] !== "") {
+                  if (devs[iX] !== undefined && devs[iX] !== ""
+                                             && devs[iX] !== "not found.") {
                      var fData = fs.readFileSync(W1PATH + "/" + devs[iX] +
                                            "/w1_slave", fsOptions).trim();
                      // Extract the numeric part
