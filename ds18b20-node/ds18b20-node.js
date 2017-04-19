@@ -55,7 +55,8 @@ module.exports = function(RED) {
          var fsOptions = { "encoding":"utf8", "flag":"r" };
          var dirs = fs.readdirSync(W1DIRS, "utf8");
          for (var iY=0; iY<dirs.length; iY++) {
-            if (dirs[iY].startsWith("w1_bus_master")) {
+            if ((dirs[iY].startsWith && dirs[iY].startsWith("w1_bus_master")) ||
+                (dirs[iY].indexOf("w1_bus_master") !== -1)) {
                var devs = fs.readFileSync(W1DIRS + dirs[iY] + 
                              "/w1_master_slaves", fsOptions).split("\n");
                for (var iX=0; iX<devs.length; iX++) {
